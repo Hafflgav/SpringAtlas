@@ -589,17 +589,7 @@
           },
           "topicName": {
             "description": "The topic of the tasks to fetch and lock.",
-            "oneOf": [
-              {
-                "type": "string"
-              },
-              {
-                "type": "array",
-                "items": {
-                  "type": "string"
-                }
-              }
-            ]
+            "type": "string"
           },
           "maxTasks": {
             "description": "The maximum number of tasks to fetch and lock.",

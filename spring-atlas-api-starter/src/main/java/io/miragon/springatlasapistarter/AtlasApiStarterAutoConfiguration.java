@@ -9,7 +9,7 @@ import org.springframework.web.reactive.function.client.ClientRequest;
 import org.springframework.web.reactive.function.client.WebClient;
 
 @Configuration
-public class AtlasApiStarterConfiguration {
+public class AtlasApiStarterAutoConfiguration {
 
     @Bean
     AnonymousSessionsApi anonymousSessionsApi(final ApiClient apiClient) {
