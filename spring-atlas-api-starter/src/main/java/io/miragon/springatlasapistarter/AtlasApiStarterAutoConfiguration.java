@@ -2,6 +2,8 @@ package io.miragon.springatlasapistarter;
 
 import io.miragon.processcube.gen.ApiClient;
 import io.miragon.processcube.gen.api.*;
+import lombok.RequiredArgsConstructor;
+import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpHeaders;
@@ -9,7 +11,11 @@ import org.springframework.web.reactive.function.client.ClientRequest;
 import org.springframework.web.reactive.function.client.WebClient;
 
 @Configuration
+@EnableConfigurationProperties(AtlasProperties.class)
+@RequiredArgsConstructor
 public class AtlasApiStarterAutoConfiguration {
+
+    private final AtlasProperties atlasProperties;
 
     @Bean
     AnonymousSessionsApi anonymousSessionsApi(final ApiClient apiClient) {
@@ -94,14 +100,14 @@ public class AtlasApiStarterAutoConfiguration {
     @Bean
     ApiClient atlasApiClient(final WebClient webClient) {
         var apiClient = new ApiClient(webClient);
-        apiClient.setBasePath("http://localhost:56000/atlas_engine/api/v1");
+        apiClient.setBasePath(atlasProperties.getBaseUrl());
         return apiClient;
     }
 
     @Bean
     WebClient webClient() {
         return WebClient.builder()
-                .baseUrl("http://localhost:56000/atlas_engine/api/v1")
+                .baseUrl(atlasProperties.getBaseUrl())
                 .filter((request, next) -> next.exchange(
                         withBearerAuth(request, "ZHVtbXlfdG9rZW4=")))
                 .build();
